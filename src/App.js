@@ -1,24 +1,40 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './componets/header';
+import SignIn from './componets/signin';
+import { BrowserRouter, Routes } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import ForgotPassword from './componets/forgot-password';
+import SignUp from './componets/signup';
+import Container from './componets/container';
+import { auth, onAuthStateChanged } from './firebase.config';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [user, setUser] = useState('')
+
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  console.log(user, "user")
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+    <BrowserRouter>
+
+      <Routes>
+        <Route path='/' element={user && <Container />} />
+        <Route path='/login' element={<SignIn />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/sign-up' element={<SignUp />} />
+      </Routes>
+    </BrowserRouter>
+
   );
 }
 
