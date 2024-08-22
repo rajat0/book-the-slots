@@ -8,6 +8,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 const Calender = ({ calendarId }) => {
   const [error, setError] = useState(null);
   const [rowData, setRowData] = useState([])
+  const [isClicked, setIsClicked] = useState(false)
   const [colDefs, setColDefs] = useState([
     { field: 'event' },
     { field: 'eventTime' },
@@ -48,27 +49,36 @@ const Calender = ({ calendarId }) => {
 
 
   return (
-    <div className="">
-      <div className="flex-row  p-4">
-        <div className=" flex justify-center bg-gray-300 items-center p-2 rounded-md">
-          <div onClick={fetchEvents} className="border-2-solid-black rounded-md bac" >Click To Fetch Data</div>
-        </div>
+    <>
+      {
 
-        {
-          rowData.length > 0 &&
-          <div className="flex justify-center bg-gray-300 items-center p-4 mt-2 rounded-md">
-            <div className="ag-theme-quartz" style={{ height: '300px', width: '50%' }}>
-              <AgGridReact
-                rowData={rowData.length && rowData}
-                columnDefs={colDefs}
-
-              />
+        <div className="">
+          <div className="flex-row  p-4">
+            <div className=" flex justify-center bg-gray-300 items-center p-2 rounded-md">
+              <div onClick={fetchEvents} className="border-2-solid-black rounded-md bac" >Click To Fetch Data</div>
             </div>
-          </div>
-        }
 
-      </div>
-    </div>
+            {
+
+              rowData.length > 0 ?
+                <div className="flex justify-center bg-gray-300 items-center p-4 mt-2 rounded-md">
+                  <div className="ag-theme-quartz" style={{ height: '300px', width: '50%' }}>
+                    <AgGridReact
+                      rowData={rowData.length && rowData}
+                      columnDefs={colDefs}
+
+                    />
+                  </div>
+                </div>
+                : <div onClick={fetchEvents} className="border-2-solid-black rounded-md bac" >!You Don't Have Any Upcoming Events In Your Calender</div>
+
+
+            }
+
+          </div>
+        </div>
+      }
+    </>
   );
 };
 
