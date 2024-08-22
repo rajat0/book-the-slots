@@ -1,7 +1,6 @@
 import './App.css';
-import Header from './componets/header';
 import SignIn from './componets/signin';
-import { BrowserRouter, HashRouter, Routes } from 'react-router-dom';
+import { HashRouter, Routes } from 'react-router-dom';
 import { Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ForgotPassword from './componets/forgot-password';
@@ -10,7 +9,6 @@ import Container from './componets/container';
 import { auth, onAuthStateChanged } from './firebase.config';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState('')
 
 
